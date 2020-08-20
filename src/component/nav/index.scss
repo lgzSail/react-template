@@ -1,0 +1,15 @@
+.nav-cnt {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    div { 
+        display: flex;
+        flex-direction: column;
+    }
+    .nav-icon {
+        width: 16px;
+        margin-right: 8px;
+        margin-top: -4px;
+        vertical-align: middle;
+    }
+}

@@ -1,0 +1,19 @@
+.EditEntConfigDialog {
+    min-width: 650px;
+    margin-top: 30px;
+    .upImg {
+        margin-top: 7px;
+        color: #5584FF;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .icon {
+        width: 66px;
+        margin-right: 20px;
+    }
+    .dialog-footer {
+        margin-top: 30px;
+    }
+}

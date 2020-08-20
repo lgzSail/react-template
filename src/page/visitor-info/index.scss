@@ -1,0 +1,53 @@
+.VisitorInfo {
+    margin: 40px 40px 0;
+    width: 100%;
+    background: #fff;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    .imgRender {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        .imgSize {
+            height: 36px;
+        }
+    }
+    .viewImgCnt {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .imgSize {
+            width: 800px;
+        }
+    }
+    .VisitorInfo-header {
+        display: flex;
+        flex-direction: row;
+        border-bottom: 1px solid #e8e8e8;
+        padding-bottom: 30px;
+    }
+    .blue-div {
+        width:6px;
+        height:20px;
+        background:rgba(24,144,255,1);
+    }
+    .header-text {
+        line-height: 20px;
+        font-size: 16px;
+        margin-left: 8px;
+    }
+    .VisitorInfo-form {
+        margin: 30px 0 40px;
+    }
+    .btn-cnt {
+        flex-direction: row;
+        margin-bottom: 20px;
+    }
+    .table {
+        margin-bottom: 70px;
+    }
+    .page {
+        margin: 0 auto;
+    }
+}
