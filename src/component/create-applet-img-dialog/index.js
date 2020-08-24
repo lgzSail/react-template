@@ -104,7 +104,7 @@ class CreateAppletImg extends React.Component {
                                 typeKey: 'visitor'
                             }}
                             headers={{
-                                'Auth-Token': window.localStorage.getItem('token')
+                                'Auth-Token': window.localStorage.getItem('visitor_token')
                             }}
                             onSuccess={this.uploadImgSuccess}
                         >

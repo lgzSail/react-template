@@ -18,7 +18,7 @@ const data = {
             ]
         },
         {
-            value: 'CMS内容配置', iconAction: 'CMSConfig', icon: 'CMSConfig2', label: 'CMSConfig', childrenList: [
+            value: 'CMS内容配置', iconAction: 'configIcon', icon: 'configIcon2', label: 'CMSConfig', childrenList: [
                 { value: '小程序头图', label: 'appletImg' },
                 { value: '入口配置', label: 'entranceConfig' }
             ]

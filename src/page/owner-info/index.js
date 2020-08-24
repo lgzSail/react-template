@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Table, Pagination, Select, Button, Dialog } from '@alifd/next';
+import { Form, Input, Table, Pagination, Select, Button, Dialog, Message } from '@alifd/next';
 import AddOwnerDialog from '../../component/add-owner-dialog';
 import MenberDialog from '../../component/menber-dialog';
 import AxiosList from '../../require/require';
@@ -98,7 +98,7 @@ class OwnerInfo extends React.Component {
         AxiosList.toVisitorData(data, this.props.history).then((res) => {
             const { data = {} } = res;
             const arr = data.content || [];
-            const visitRecordState = JSON.parse(window.localStorage.getItem('visit_record_state')) || [];
+            const visitRecordState = JSON.parse(window.localStorage.getItem('visitor_visit_record_state')) || [];
             Dialog.show({
                 title: '访客记录',
                 content: <div className="menberCardDialog">
@@ -121,7 +121,7 @@ class OwnerInfo extends React.Component {
                                                     <span>{item.visitorPhone}</span>
                                                 </div>
                                                 <div className="cntItem-top-item">
-                                                    <span>添加时间：</span>
+                                                    <span>访问时间：</span>
                                                     <span>{item.visitStartDate}</span>
                                                 </div>
                                             </div>
@@ -190,23 +190,49 @@ class OwnerInfo extends React.Component {
     }
 
     // 刷脸凭证渲染
-    imgRender = (value) => {
+    imgRender = (value, bol, item) => {
         return <div className="imgRender">
-            {
-                value ?
-                    <img className="imgSize" src={require(`${value}`)} alt="" />
-                    :
-                    null
-            }
-            <div onClick={() => this.setState({ imgVisible: true, viewImg: value })} >
+            <div onClick={() => this.imgView(item)} >
                 查看凭证
             </div>
         </div>
     }
 
+    imgView = (item, bol) => {
+        if (bol) {
+            AxiosList.viewMenberImg(item, this.props.history).then((res) => {
+                const { data = {} } = res;
+                if (!data.data) {
+                    Message.error('无刷脸凭证');
+                    return null;
+                } 
+                this.setState({
+                    imgVisible: true,
+                    viewImg: data.data
+                })
+            })
+        } else {
+            const data = {
+                name: item.ownerName,
+                phone: item.ownerPhone
+            }
+            AxiosList.viewOwnerImg(data, this.props.history).then((res) => {
+                const { data = {} } = res;
+                if (!data.data) {
+                    Message.error('无刷脸凭证');
+                    return null;
+                } 
+                this.setState({
+                    imgVisible: true,
+                    viewImg: data.data
+                })
+            })
+        }
+    }
+
     render() {
         const { addOwnerVisible, page, size, total, tableList = [], editOwnerFormData, menberDialogVisible, addressId, viewImg, imgVisible } = this.state;
-        const addressType = JSON.parse(window.localStorage.getItem('address_type')) || [];
+        const addressType = JSON.parse(window.localStorage.getItem('visitor_address_type')) || [];
         const typeRender = (value) => {
             return <span>{fun.returnValue(value, addressType)}</span>
         }
@@ -261,7 +287,7 @@ class OwnerInfo extends React.Component {
                     <Table.Column title="业主电话" dataIndex="ownerPhone" />
                     <Table.Column title="身份证号码" dataIndex="ownerIdCardNo" />
                     <Table.Column title="住址信息" dataIndex="address" />
-                    <Table.Column title="刷脸凭证" cell={this.imgRender} dataIndex="img" />
+                    <Table.Column title="刷脸凭证" cell={this.imgRender} />
                     <Table.Column title="类型" cell={typeRender} dataIndex="type" />
                     <Table.Column title="家庭成员" cell={this.menberBtn} dataIndex="id" />
                     <Table.Column title="访客记录" cell={this.visitorBtn} dataIndex="id" />
@@ -269,11 +295,11 @@ class OwnerInfo extends React.Component {
                 </Table>
                 <Pagination totalRender={total => `总数: ${total} `} pageSize={size} current={page} total={total} shape="arrow-only" showJump={false} onChange={this.pageChange} className="page" />
                 <AddOwnerDialog editFormData={editOwnerFormData} updataList={this.ownerInfoList} history={this.props.history} addOwnerVisible={addOwnerVisible} addOwnerClose={this.addOwnerClose} />
-                <MenberDialog viewImg={(value) => this.setState({ imgVisible: true, viewImg: value })} addressId={addressId} history={this.props.history} visible={menberDialogVisible} onClose={this.menberDialogClose} />
+                <MenberDialog viewImg={(item) => {this.imgView(item, true)}} addressId={addressId} history={this.props.history} visible={menberDialogVisible} onClose={this.menberDialogClose} />
                 {
                     imgVisible && viewImg ?
                         <div className="viewImgCnt">
-                            <img className="imgSize" src={require(`${viewImg}`)} alt="" />
+                            <img className="imgSize" src={viewImg} alt="" />
                             <img onClick={() => this.setState({ imgVisible: false, viewImg: undefined })} className="icon" src={require('../../img/close.png')} alt="" />
                         </div>
                         :

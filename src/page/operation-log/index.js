@@ -62,7 +62,7 @@ class OperationLog extends React.Component {
 
     render() {
         const { page, size, total, tableList = [] } = this.state;
-        const operationLogArr = JSON.parse(window.localStorage.getItem('sys_operate_log_type')) || [];
+        const operationLogArr = JSON.parse(window.localStorage.getItem('visitor_sys_operate_log_type')) || [];
         
         return (
             <div className="OperationLog">

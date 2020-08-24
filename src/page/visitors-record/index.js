@@ -79,9 +79,10 @@ class VisitorsRecord extends React.Component {
 
     render() {
         const { page, size, total, tableList = [] } = this.state;
-        let visitRecordState = []
-        if (window.localStorage['type'] === -1) {
-            visitRecordState = JSON.parse(window.localStorage.getItem('visit_record_state')) || [];
+        let visitRecordState = [];
+        const user = JSON.parse(window.localStorage.getItem('visitor_user')) || [];
+        if (user.type === -1) {
+            visitRecordState = JSON.parse(window.localStorage.getItem('visitor_visit_record_state')) || [];
         } else {
             visitRecordState = [
                 { value: 2, label: "已同意" },

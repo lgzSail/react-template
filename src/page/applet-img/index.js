@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Table, Pagination, Select, Button, Switch } from '@alifd/next';
+import { Form, Table, Pagination, Select, Button, Switch, Message } from '@alifd/next';
 import AxiosList from '../../require/require';
 import CreateAppletImg from '../../component/create-applet-img-dialog';
 import './index.scss';
@@ -17,10 +17,6 @@ class AppletImg extends React.Component {
     }
     componentDidMount() {
         this.appletImg();
-    }
-
-    componentWillReceiveProps(next) {
-        console.log(123)
     }
 
     // 获取列表接口调用
@@ -86,6 +82,10 @@ class AppletImg extends React.Component {
     // 批量启动小程序头图
     stateAppletImgs = () => {
         const { selectArr = [] } = this.state;
+        if (selectArr.length === 0) {
+            Message.error('请至少选择一个选项');
+            return null;
+        }
         AxiosList.stateAppletImg(selectArr, this.props.history).then(() => {
             this.appletImg(null, true);
         })
@@ -94,6 +94,10 @@ class AppletImg extends React.Component {
     // 批量停用小程序头图
     stopAppletImgs = () => {
         const { selectArr = [] } = this.state;
+        if (selectArr.length === 0) {
+            Message.error('请至少选择一个选项');
+            return null;
+        }
         AxiosList.stopAppletImg(selectArr, this.props.history).then(() => {
             this.appletImg(null, true);
         })
@@ -148,7 +152,7 @@ class AppletImg extends React.Component {
 
     render() {
         const { selectArr, page, size, total, tableList = [], uploadImgVisible, editAppletData } = this.state;
-        const carouselPictureState = JSON.parse(window.localStorage.getItem('carousel_picture_state')) || [];
+        const carouselPictureState = JSON.parse(window.localStorage.getItem('visitor_carousel_picture_state')) || [];
         return (
             <div className="AppletImg">
                 <div className="AppletImg-header">

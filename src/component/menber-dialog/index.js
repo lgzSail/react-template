@@ -20,7 +20,8 @@ class MenberDialog extends React.Component {
     }
 
     componentWillReceiveProps(next) {
-        if (next.addressId) {
+        const { addressId } = this.state;
+        if (next.addressId && next.addressId !== addressId) {
             this.setState({
                 addressId: next.addressId
             }, () => {
@@ -69,18 +70,17 @@ class MenberDialog extends React.Component {
 
     // 添加家庭成员
     addMenber = () => {
-        const { menberList } = this.state;
-        menberList.unshift({
-            add: true
-        });
+        let { addNum = 0 } = this.state;
+        addNum = addNum + 1;
         this.setState({
-            menberList
+            addNum
         })
     }
 
     // 调用添加成员接口
     addMenberAjax = (index) => {
         const { formData = {}, addressId } = this.state;
+        let { addNum } = this.state;
         const form = {
             name: formData[`name${index}`],
             phone: formData[`phone${index}`],
@@ -102,8 +102,10 @@ class MenberDialog extends React.Component {
             formData[`phone${index}`] = undefined;
             formData[`idCardNo${index}`] = undefined;
             formData[`type${index}`] = undefined;
+            addNum -= 1;
             this.setState({
-                formData
+                formData,
+                addNum
             }, () => {
                 this.viewMenber();
             })
@@ -113,7 +115,6 @@ class MenberDialog extends React.Component {
 
     // 为空校验
     testNull = (obj) => {
-        console.log(obj)
         for (const item in obj) {
             if (!obj[item] && item !== 'idCardNo') {
                 Message.error('输入框不能为空。');
@@ -183,11 +184,26 @@ class MenberDialog extends React.Component {
         return newArr;
     }
 
+    newMenberList = () => {
+        const { menberList = [], addNum = 0 } = this.state;
+        const newMenberList = JSON.parse(JSON.stringify(menberList));
+        for (let i = 0; i < addNum; i++) {
+            newMenberList.unshift({
+                add: true,
+                id: `add${i}`
+            });
+        }
+        return newMenberList;
+    }
+
     render() {
         const { visible } = this.props;
-        const { menberList = [], addressId, editObj = {} } = this.state;
+        const { addressId, editObj = {}, } = this.state;
+        const newMenberList = this.newMenberList()
+
+        let { addNum = 0 } = this.state;
         let { formData = {} } = this.state;
-        const familyMemberType = JSON.parse(window.localStorage.getItem('sys_owner_family_member_type')) || [];
+        const familyMemberType = JSON.parse(window.localStorage.getItem('visitor_sys_owner_family_member_type')) || [];
         const familyMemberTypeArr = fun.deleteType(familyMemberType);
         return (
             <Dialog
@@ -196,7 +212,8 @@ class MenberDialog extends React.Component {
                 visible={visible}
                 onClose={() => {
                     this.setState({
-                        editObj: {}
+                        editObj: {},
+                        addNum: 0
                     }, () => {
                         this.props.onClose()
                     })
@@ -207,8 +224,8 @@ class MenberDialog extends React.Component {
                         <Button onClick={this.addMenber} type="secondary">添加</Button>
                     </div>
                     {
-                        menberList.length > 0 ?
-                            menberList.map((item, index) => {
+                        newMenberList.length > 0 ?
+                            newMenberList.map((item, index) => {
                                 if (editObj[item.id] || item.add) {
                                     return (
                                         <div key={index} className="menberCard-cnt menberCard-edit">
@@ -285,14 +302,14 @@ class MenberDialog extends React.Component {
                                                         formData[`idCardNo${item.id}`] = undefined;
                                                         formData[`type${item.id}`] = undefined;
                                                         if (item.add) {
-                                                            menberList.splice(index, 1);
+                                                            addNum = addNum - 1
                                                         } else {
                                                             editObj[item.id] = false
                                                         }
                                                         this.setState({
                                                             formData,
-                                                            menberList,
-                                                            editObj
+                                                            editObj,
+                                                            addNum
                                                         })
                                                     }}>
                                                     <img className="icon-bottom" src={require('../../img/deleteIcon.png')} alt="" />
@@ -332,7 +349,7 @@ class MenberDialog extends React.Component {
                                                             :
                                                             <div />
                                                     }
-                                                    <div style={{ cursor: 'pointer' }}>
+                                                    <div onClick={() => this.props.viewImg(item)} style={{ cursor: 'pointer', color: '#5584FF' }}>
                                                         查看凭证
                                                     </div>
                                                     <div>

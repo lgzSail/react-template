@@ -15,10 +15,16 @@ class Header extends React.Component {
   }
 
   componentDidMount() {
-    
+    AxiosList.getConfig().then((res) => {
+      const { data = {} } = res;
+      const newData = data.data || {};
+      this.setState({
+        sysName: newData.name
+      })
+    })
     AxiosList.getMd5().then((res) => {
-      if (window.localStorage.getItem('md5') !== (res.data && res.data.data)) {
-        window.localStorage.setItem('md5', res.data.data);
+      if (window.localStorage.getItem('visitor_md5') !== (res.data && res.data.data)) {
+        window.localStorage.setItem('visitor_md5', res.data.data);
         this.getDataList();
       }
     })
@@ -28,9 +34,8 @@ class Header extends React.Component {
     AxiosList.dataList().then((res) => {
       if (res.status === 200) {
         const data = res.data.data;
-        console.log(res.headers);
         for (const key in data) {
-          window.localStorage.setItem(key, JSON.stringify(fun.parseArr(data[key].data)))
+          window.localStorage.setItem(`visitor_${key}`, JSON.stringify(fun.parseArr(data[key].data)))
         }
       }
     });
@@ -59,18 +64,21 @@ class Header extends React.Component {
   render() {
     const bol = window.location.pathname === '/login';
     if (bol) return null;
+    const obj = window.localStorage.getItem('visitor_user') && JSON.parse(window.localStorage.getItem('visitor_user'));
+    const name = obj && obj.name;
+    const {sysName} = this.state;
     return (
       <div className="header">
         <div className="header-text">
-          <div>
-            <img className="icon" src={require('../../img/icon.png')} alt="" />
+          <div id="sysTitle" className="sysTitle">
+            {sysName}
           </div>
           <div className="header-right">
             <div>
               <img className="header-icon" src={require('../../img/adminIcon.png')} alt="" />
             </div>
             <div className="header-name">
-              {window.localStorage.getItem('name')}
+              {name}
             </div>
             <div>
               <img onClick={this.loginOut} className="header-icon" src={require('../../img/loginOutIcon.png')} alt="" />

@@ -99,7 +99,7 @@ class EntranceConfig extends React.Component {
 
     render() {
         const { page, size, total, tableList = [], EditEntConfigVisible, EditEntConfigData } = this.state;
-        const typeDataSoure = JSON.parse(window.localStorage.getItem('app_agent_type'))
+        const typeDataSoure = JSON.parse(window.localStorage.getItem('visitor_app_agent_type'))
         const typeRender = (value) => {
             return <span>{fun.returnValue(value, typeDataSoure)}</span>
         }

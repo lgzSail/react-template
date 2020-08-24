@@ -67,7 +67,7 @@ class PersonnelAccount extends React.Component {
     createAccount = () => {
         const formItemLayout = {
             labelCol: {
-                fixedSpan: 8
+                fixedSpan: 9
             },
             wrapperCol: {
                 span: 18
@@ -256,7 +256,7 @@ class PersonnelAccount extends React.Component {
     render() {
         const { page, size, total, tableList = [] } = this.state;
         
-        const userState = JSON.parse(window.localStorage.getItem('user_state')) || [];
+        const userState = JSON.parse(window.localStorage.getItem('visitor_user_state')) || [];
         return (
             <div className="personnelAccount">
                 <div className="personnelAccount-header">

@@ -14,7 +14,7 @@ class IndexNav extends React.Component {
   }
 
   componentDidMount() {
-    const bolToken = window.localStorage.getItem('token');
+    const bolToken = window.localStorage.getItem('visitor_token');
     if (bolToken === null) this.props.history.push('/login');
   }
 

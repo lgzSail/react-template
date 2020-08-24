@@ -38,7 +38,6 @@ class AddOwner extends React.Component {
                 const data = {
                     addressId: formData.id
                 }
-                console.log(123)
                 AxiosList.toMenberData(data, this.props.history).then((res) => {
                     const { data = {} } = res;
                     const { content = [] } = data;
@@ -157,8 +156,8 @@ class AddOwner extends React.Component {
             addAddressNum = 0
         };
         const arr = fun.createArr(addAddressNum);
-        const addressType = JSON.parse(window.localStorage.getItem('address_type')) || [];
-        const familyMemberType = JSON.parse(window.localStorage.getItem('sys_owner_family_member_type')) || [];
+        const addressType = JSON.parse(window.localStorage.getItem('visitor_address_type')) || [];
+        const familyMemberType = JSON.parse(window.localStorage.getItem('visitor_sys_owner_family_member_type')) || [];
         const familyMemberTypeArr = fun.deleteType(familyMemberType);
         return (
             <Dialog

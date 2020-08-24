@@ -108,7 +108,7 @@ class ParameterConfig extends React.Component {
                         <Button onClick={
                             () => {
                                 AxiosList.setSysConfig(sysConfig, this.props.history).then(() => {
-                                    this.getSysConfig(true);
+                                    document.getElementById('sysTitle').innerText = sysConfig.name;
                                 })
                             }
                         } type="primary">保存</Button>

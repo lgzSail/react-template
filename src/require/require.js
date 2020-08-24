@@ -103,7 +103,7 @@ const AxiosList = {
             method: 'get',
             url: `//jh.upk.net:12080/sys/visitor?${str}&sort=asc`,
             headers: {
-                'Auth-Token': window.localStorage.getItem('token')
+                'Auth-Token': window.localStorage.getItem('visitor_token')
             }
         }
         return fun(obj, pushFun)
@@ -116,7 +116,7 @@ const AxiosList = {
             method: 'get',
             url: `//jh.upk.net:12080/sys/visitor?${str}&sort=asc`,
             headers: {
-                'Auth-Token': window.localStorage.getItem('token')
+                'Auth-Token': window.localStorage.getItem('visitor_token')
             }
         }
         return fun(obj, pushFun)
@@ -128,7 +128,7 @@ const AxiosList = {
             url: `//jh.upk.net:12080/sys/visitor/add/black`,
             data,
             headers: {
-                'Auth-Token': window.localStorage.getItem('token'),
+                'Auth-Token': window.localStorage.getItem('visitor_token'),
                 'content-type': 'application/json'
             }
         }
@@ -140,7 +140,7 @@ const AxiosList = {
             method: 'put',
             url: `//jh.upk.net:12080/sys/visitor/${data}/remove/black`,
             headers: {
-                'Auth-Token': window.localStorage.getItem('token'),
+                'Auth-Token': window.localStorage.getItem('visitor_token'),
             }
         }
         return fun(obj, pushFun)
@@ -152,7 +152,7 @@ const AxiosList = {
             method: 'get',
             url: `//jh.upk.net:12080/sys/owner/address?${str}&sort=asc`,
             headers: {
-                'Auth-Token': window.localStorage.getItem('token')
+                'Auth-Token': window.localStorage.getItem('visitor_token')
             }
         }
         return fun(obj, pushFun, messegeBol)
@@ -164,7 +164,7 @@ const AxiosList = {
             method: 'get',
             url: `//jh.upk.net:12080/sys/visit/record?${str}&sort=asc`,
             headers: {
-                'Auth-Token': window.localStorage.getItem('token')
+                'Auth-Token': window.localStorage.getItem('visitor_token')
             }
         }
         return fun(obj, pushFun)
@@ -176,7 +176,7 @@ const AxiosList = {
             method: 'get',
             url: `//jh.upk.net:12080/user/admin?${str}`,
             headers: {
-                'Auth-Token': window.localStorage.getItem('token')
+                'Auth-Token': window.localStorage.getItem('visitor_token')
             }
         }
         return fun(obj, pushFun, bol)
@@ -187,7 +187,7 @@ const AxiosList = {
             method: 'get',
             url: `//jh.upk.net:12080/sys/visit/address/${data.addressId}/record`,
             headers: {
-                'Auth-Token': window.localStorage.getItem('token')
+                'Auth-Token': window.localStorage.getItem('visitor_token')
             }
         }
         return fun(obj, pushFun)
@@ -198,7 +198,7 @@ const AxiosList = {
             method: 'get',
             url: `//jh.upk.net:12080/sys/owner/address/${data.addressId}/family/member`,
             headers: {
-                'Auth-Token': window.localStorage.getItem('token')
+                'Auth-Token': window.localStorage.getItem('visitor_token')
             }
         }
         return fun(obj, pushFun)
@@ -210,7 +210,7 @@ const AxiosList = {
             url: `//jh.upk.net:12080/sys/owner/address`,
             data,
             headers: {
-                'Auth-Token': window.localStorage.getItem('token')
+                'Auth-Token': window.localStorage.getItem('visitor_token')
             }
         }
         return fun(obj, pushFun)
@@ -224,7 +224,7 @@ const AxiosList = {
                 address: data.address
             },
             headers: {
-                'Auth-Token': window.localStorage.getItem('token')
+                'Auth-Token': window.localStorage.getItem('visitor_token')
             }
         }
         return fun(obj, pushFun)
@@ -235,7 +235,7 @@ const AxiosList = {
             method: 'get',
             url: `//jh.upk.net:12080/sys/config`,
             headers: {
-                'Auth-Token': window.localStorage.getItem('token')
+                'Auth-Token': window.localStorage.getItem('visitor_token')
             }
         }
         return fun(obj, pushFun, bol)
@@ -247,10 +247,18 @@ const AxiosList = {
             url: `//jh.upk.net:12080/sys/config`,
             data,
             headers: {
-                'Auth-Token': window.localStorage.getItem('token')
+                'Auth-Token': window.localStorage.getItem('visitor_token')
             }
         }
         return fun(obj, pushFun)
+    },
+    // 获取系统配置
+    getConfig: () => {
+        const obj = {
+            method: 'get',
+            url: `//jh.upk.net:12080/sys/config`,
+        }
+        return axios(obj);
     },
     // 重置密码
     resetPassword: (data, pushFun) => {
@@ -260,7 +268,7 @@ const AxiosList = {
             url: `//jh.upk.net:12080/user/reset/${data.id}/password`,
             data: data.password,
             headers: {
-                'Auth-Token': window.localStorage.getItem('token'),
+                'Auth-Token': window.localStorage.getItem('visitor_token'),
                 'content-type': 'application/json'
             }
         }
@@ -273,7 +281,7 @@ const AxiosList = {
             url: `//jh.upk.net:12080/user/create/admin`,
             data,
             headers: {
-                'Auth-Token': window.localStorage.getItem('token')
+                'Auth-Token': window.localStorage.getItem('visitor_token')
             }
         }
         return fun(obj, pushFun)
@@ -285,7 +293,7 @@ const AxiosList = {
             url: `//jh.upk.net:12080/user/save/admin/${data.id}`,
             data,
             headers: {
-                'Auth-Token': window.localStorage.getItem('token'),
+                'Auth-Token': window.localStorage.getItem('visitor_token'),
                 'content-type': 'application/json'
             }
         }
@@ -300,7 +308,7 @@ const AxiosList = {
             url: `//jh.upk.net:12080/user/state/normal`,
             data: arr,
             headers: {
-                'Auth-Token': window.localStorage.getItem('token'),
+                'Auth-Token': window.localStorage.getItem('visitor_token'),
                 'content-type': 'application/json'
             }
         }
@@ -315,7 +323,7 @@ const AxiosList = {
             url: `//jh.upk.net:12080/user/state/disabled`,
             data: arr,
             headers: {
-                'Auth-Token': window.localStorage.getItem('token'),
+                'Auth-Token': window.localStorage.getItem('visitor_token'),
                 'content-type': 'application/json'
             }
         }
@@ -328,7 +336,7 @@ const AxiosList = {
             method: 'get',
             url: `//jh.upk.net:12080/sys/log?${str}`,
             headers: {
-                'Auth-Token': window.localStorage.getItem('token')
+                'Auth-Token': window.localStorage.getItem('visitor_token')
             }
         }
         return fun(obj, pushFun)
@@ -340,7 +348,7 @@ const AxiosList = {
             method: 'get',
             url: `//jh.upk.net:12080/sys/operate/log?${str}`,
             headers: {
-                'Auth-Token': window.localStorage.getItem('token')
+                'Auth-Token': window.localStorage.getItem('visitor_token')
             }
         }
         return fun(obj, pushFun)
@@ -352,7 +360,7 @@ const AxiosList = {
             method: 'get',
             url: `//jh.upk.net:12080/carousel/picture?${str}`,
             headers: {
-                'Auth-Token': window.localStorage.getItem('token')
+                'Auth-Token': window.localStorage.getItem('visitor_token')
             }
         }
         return fun(obj, pushFun, bol)
@@ -364,7 +372,7 @@ const AxiosList = {
             url: `//jh.upk.net:12080/carousel/picture/state/normal`,
             data,
             headers: {
-                'Auth-Token': window.localStorage.getItem('token'),
+                'Auth-Token': window.localStorage.getItem('visitor_token'),
                 'content-type': 'application/json'
             }
         }
@@ -377,7 +385,7 @@ const AxiosList = {
             url: `//jh.upk.net:12080/carousel/picture/state/disabled`,
             data,
             headers: {
-                'Auth-Token': window.localStorage.getItem('token'),
+                'Auth-Token': window.localStorage.getItem('visitor_token'),
                 'content-type': 'application/json'
             }
         }
@@ -391,7 +399,7 @@ const AxiosList = {
             url: `//jh.upk.net:12080/carousel/picture`,
             data,
             headers: {
-                'Auth-Token': window.localStorage.getItem('token'),
+                'Auth-Token': window.localStorage.getItem('visitor_token'),
             }
         }
         return fun(obj, pushFun)
@@ -403,7 +411,7 @@ const AxiosList = {
             url: `//jh.upk.net:12080/carousel/picture/${data.id}`,
             data,
             headers: {
-                'Auth-Token': window.localStorage.getItem('token'),
+                'Auth-Token': window.localStorage.getItem('visitor_token'),
                 'content-type': 'application/json'
             }
         }
@@ -416,7 +424,7 @@ const AxiosList = {
             method: 'get',
             url: `//jh.upk.net:12080/app/entrance/config?${str}`,
             headers: {
-                'Auth-Token': window.localStorage.getItem('token')
+                'Auth-Token': window.localStorage.getItem('visitor_token')
             }
         }
         return fun(obj, pushFun, bol)
@@ -428,7 +436,7 @@ const AxiosList = {
             url: `//jh.upk.net:12080/app/entrance/config/state/normal`,
             data,
             headers: {
-                'Auth-Token': window.localStorage.getItem('token'),
+                'Auth-Token': window.localStorage.getItem('visitor_token'),
                 'content-type': 'application/json'
             }
         }
@@ -441,7 +449,7 @@ const AxiosList = {
             url: `//jh.upk.net:12080/app/entrance/config/state/disabled`,
             data,
             headers: {
-                'Auth-Token': window.localStorage.getItem('token'),
+                'Auth-Token': window.localStorage.getItem('visitor_token'),
                 'content-type': 'application/json'
             }
         }
@@ -454,7 +462,7 @@ const AxiosList = {
             url: `//jh.upk.net:12080/app/entrance/config/${data.id}`,
             data,
             headers: {
-                'Auth-Token': window.localStorage.getItem('token'),
+                'Auth-Token': window.localStorage.getItem('visitor_token'),
                 'content-type': 'application/json'
             }
         }
@@ -467,7 +475,7 @@ const AxiosList = {
             url: `//jh.upk.net:12080/sys/owner/address/${data.addressId}/family/member/${data.id}`,
             data,
             headers: {
-                'Auth-Token': window.localStorage.getItem('token'),
+                'Auth-Token': window.localStorage.getItem('visitor_token'),
                 'content-type': 'application/json'
             }
         }
@@ -480,7 +488,7 @@ const AxiosList = {
             url: `//jh.upk.net:12080/sys/owner/address/${data.addressId}/family/member`,
             data: data.data,
             headers: {
-                'Auth-Token': window.localStorage.getItem('token'),
+                'Auth-Token': window.localStorage.getItem('visitor_token'),
                 'content-type': 'application/json'
             }
         }
@@ -493,11 +501,47 @@ const AxiosList = {
             url: `//jh.upk.net:12080/sys/owner/address/${data.addressId}/family/member/${data.id}`,
             data,
             headers: {
-                'Auth-Token': window.localStorage.getItem('token'),
+                'Auth-Token': window.localStorage.getItem('visitor_token'),
                 'content-type': 'application/json'
             }
         }
         return fun(obj, pushFun)
+    },
+    // 查看用户人脸图片
+    viewVisitorImg: (id, pushFun) => {
+        const obj = {
+            method: 'get',
+            url: `//jh.upk.net:12080/user/real/name/certification/${id}/face/photo`,
+            headers: {
+                'Auth-Token': window.localStorage.getItem('visitor_token'),
+            }
+        }
+        return axios(obj, pushFun)
+    },
+    // 查看业主人脸图片
+    viewOwnerImg: (data, pushFun) => {
+        const str = cancatStr(data);
+        const obj = {
+            method: 'get',
+            url: `//jh.upk.net:12080/user/real/name/certification/owner/face/photo?${str}`,
+            data,
+            headers: {
+                'Auth-Token': window.localStorage.getItem('visitor_token'),
+            }
+        }
+        return axios(obj, pushFun)
+    },
+    // 查看家庭成员人脸图片
+    viewMenberImg: (data, pushFun) => {
+        const str = cancatStr(data);
+        const obj = {
+            method: 'get',
+            url: `//jh.upk.net:12080/user/real/name/certification/visitor/face/photo?${str}`,
+            headers: {
+                'Auth-Token': window.localStorage.getItem('visitor_token'),
+            }
+        }
+        return axios(obj, pushFun)
     },
 }
 

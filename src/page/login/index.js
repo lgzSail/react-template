@@ -11,6 +11,16 @@ class Login extends React.Component {
     }
   }
 
+  componentDidMount() {
+    AxiosList.getConfig().then((res) => {
+      const { data = {} } = res;
+      const newData = data.data || {};
+      this.setState({
+        sysName: newData.name
+      })
+    })
+  }
+
   // 切换tab
   tabChange = (value) => {
     this.setState({
@@ -43,9 +53,9 @@ class Login extends React.Component {
           Message.error(result.info);
         } else {
           Message.success(result.info);
-          for (const key in result.data) {
-            window.localStorage[key] = result.data[key]
-          }
+          window.localStorage['visitor_user'] = JSON.stringify(result.data);
+          console.log(result.data.token)
+          window.localStorage['visitor_token'] = result.data.token;
           this.props.history.push('/visitorInfo')
         }
       })
@@ -69,9 +79,8 @@ class Login extends React.Component {
           Message.error(result.info);
         } else {
           Message.success(result.info);
-          for (const key in result.data) {
-            window.localStorage[key] = result.data[key]
-          }
+          window.localStorage['visitor_user'] = JSON.stringify(result.data);
+          window.localStorage['visitor_token'] = result.data.token;
           this.props.history.push('/visitorInfo')
         }
       })
@@ -139,7 +148,7 @@ class Login extends React.Component {
   }
 
   render() {
-    const { phone, disabledBtn, code } = this.state;
+    const { phone, disabledBtn, code, sysName } = this.state;
 
     const getCode = (
       <div onClick={this.getCode} style={{ color: disabledBtn ? 'grey' : null }} className={"getCode"}>
@@ -150,6 +159,9 @@ class Login extends React.Component {
       <div className="login">
         <img alt=" " className="login-bg" src={require("../../img/bg.png")} />
         <div className="login-cnt">
+          <div id="sysTitle" className="sysTitle">
+            {sysName}
+          </div>
           <div className="login-cnt-border">
             <div className="login-cnt-right" />
             <div className="login-cnt-left">

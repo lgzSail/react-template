@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Table, Pagination, Button, Dialog } from '@alifd/next';
+import { Form, Input, Table, Pagination, Button, Dialog, Message } from '@alifd/next';
 import AxiosList from '../../require/require';
 import './index.scss';
 
@@ -63,20 +63,33 @@ class VisitorInfo extends React.Component {
 
     imgRender = (value) => {
         return <div className="imgRender">
-            {
-                value ?
-                    <img className="imgSize" src={require(`${value}`)} alt="" />
-                    :
-                    null
-            }
-            <div onClick={() => this.setState({ imgVisible: true, viewImg: value })} >
+            <div onClick={() => this.imgView(value)} >
                 查看凭证
             </div>
         </div>
     }
 
+    // 查看凭证
+    imgView = (id) => {
+        AxiosList.viewVisitorImg(id, this.props.history).then((res) => {
+            const { data = {} } = res;
+            if (!data.data) {
+                Message.error('无刷脸凭证');
+                return null;
+            }
+            this.setState({
+                imgVisible: true,
+                viewImg: data.data
+            })
+        })
+    }
+
     addBlacklist = () => {
         const { selectArr = [] } = this.state;
+        if (selectArr.length === 0) {
+            Message.error('请至少选择一名访客')
+            return null;
+        }
         Dialog.show({
             title: '加入黑名单',
             content: <div style={{ minWidth: 180 }}>
@@ -93,6 +106,7 @@ class VisitorInfo extends React.Component {
 
     render() {
         const { selectArr, page, size, total, tableList = [], imgVisible, viewImg } = this.state;
+        console.log(viewImg)
         return (
             <div className="VisitorInfo">
                 <div className="VisitorInfo-header">
@@ -140,13 +154,13 @@ class VisitorInfo extends React.Component {
                     <Table.Column title="访客姓名" dataIndex="name" />
                     <Table.Column title="访客电话" dataIndex="phone" />
                     <Table.Column title="身份证号码" dataIndex="idCardNo" />
-                    <Table.Column title="刷脸凭证" cell={this.imgRender} dataIndex="img" />
+                    <Table.Column title="刷脸凭证" cell={this.imgRender} dataIndex="id" />
                 </Table>
                 <Pagination totalRender={total => `总数: ${total} `} pageSize={size} current={page} total={total} shape="arrow-only" showJump={false} onChange={this.pageChange} className="page" />
                 {
                     imgVisible && viewImg ?
                         <div className="viewImgCnt">
-                            <img className="imgSize" src={require(`${viewImg}`)} alt="" />
+                            <img className="imgSize" src={viewImg} alt="" />
                             <img onClick={() => this.setState({ imgVisible: false, viewImg: undefined })} className="icon" src={require('../../img/close.png')} alt="" />
                         </div>
                         :

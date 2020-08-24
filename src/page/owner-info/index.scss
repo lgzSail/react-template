@@ -8,17 +8,32 @@
     .imgRender {
         display: flex;
         align-items: center;
+        color: #5584FF;
         cursor: pointer;
         .imgSize {
             height: 36px;
         }
     }
     .viewImgCnt {
+        position: fixed;
+        top: 0;
+        left:0;
+        height: 100%;
+        width: 100%;
+        background-color: rgba(0,0,0,0.3);
         display: flex;
         justify-content: center;
         align-items: center;
+        z-index: 1003;
         .imgSize {
-            width: 800px;
+            width: 400px;
+        }
+        .icon {
+            width: 32px;
+            position: absolute;
+            top:3%;
+            right: 3%;
+            cursor: pointer;
         }
     }
     .ownerInfo-header {
@@ -83,7 +98,7 @@
         }
     }
     .menberCard {
-        margin:0 auto;
+        margin:0 auto 30px;
         width: 938px;
         display: flex;
         padding: 26px 30px;
